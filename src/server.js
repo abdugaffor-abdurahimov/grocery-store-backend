@@ -2,12 +2,11 @@ const express = require("express");
 const cors = require("cors");
 const listEndpoints = require("express-list-endpoints");
 const mongoose = require("mongoose");
+const api = require("./api");
 
 const { PORT, FE_URL, MONGODB_URL, NODE_ENV } = process.env;
 
 const app = express();
-
-app.use(express.json());
 
 const whitelist = [FE_URL];
 const corsOptions = {
@@ -22,8 +21,12 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
+app.use(express.json());
+
+app.use("/api", api);
+
 // Error handlers
-require("./middlewares/errorHandlers")(app);
+// require("./middlewares/errorHandlers")(app);
 
 mongoose
   .connect(MONGODB_URL, {
@@ -33,14 +36,17 @@ mongoose
     useFindAndModify: true,
   })
   .then(() => {
-    if (NODE_ENV == "production") {
-      console.log("🚀 Server is running on CLOUD on PORT: ", PORT);
-    } else {
-      console.log("🚀 Server is running LOCALLY on PORT: ", PORT);
-    }
-    console.log(listEndpoints(app));
+    app.listen(PORT, () => {
+      if (NODE_ENV == "production") {
+        console.log("Server is running 🚀 on  CLOUD on  PORT: ", PORT);
+      } else {
+        console.log(
+          `Server is running 🚀 LOCALLY  on url : http://localhost:${PORT}`
+        );
+      }
+      console.log(listEndpoints(app));
+    });
   })
   .catch((e) => {
-    console.log("MONGODB_URL", MONGODB_URL);
     console.log(`❌ DB connection error: ${e}`);
   });

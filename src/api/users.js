@@ -1,4 +1,4 @@
-const UserModel = require("../models/user");
+const UserModel = require("../models/userModel");
 const { getTokenPairs } = require("../utils");
 
 const router = require("express").Router();

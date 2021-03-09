@@ -26,7 +26,7 @@ app.use(express.json());
 app.use("/api", api);
 
 // Error handlers
-// require("./middlewares/errorHandlers")(app);
+require("./middlewares/errorHandlers")(app);
 
 mongoose
   .connect(MONGODB_URL, {
@@ -37,6 +37,7 @@ mongoose
   })
   .then(() => {
     app.listen(PORT, () => {
+      console.log(listEndpoints(app));
       if (NODE_ENV == "production") {
         console.log("Server is running 🚀 on  CLOUD on  PORT: ", PORT);
       } else {
@@ -44,7 +45,6 @@ mongoose
           `Server is running 🚀 LOCALLY  on url : http://localhost:${PORT}`
         );
       }
-      console.log(listEndpoints(app));
     });
   })
   .catch((e) => {

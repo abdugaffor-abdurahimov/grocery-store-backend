@@ -3,19 +3,19 @@ const jwt = require("jsonwebtoken");
 
 const getTokenPairs = async (user) => {
   try {
-    const access_token = await generateToken(
+    const refreshToken = await generateToken(
       { _id: user._id },
       ACCESS_TOKEN_SECRET,
       "30m"
     );
 
-    const refresh_token = await generateToken(
+    const accessToken = await generateToken(
       { _id: user._id },
       REFRESH_TOKEN_SECRET,
       "1 week"
     );
 
-    return { access_token, refresh_token };
+    return { accessToken, refreshToken };
   } catch (error) {
     throw new Error();
   }

@@ -17,6 +17,11 @@ router.post("/login", async (req, res, next) => {
     const { email, password } = req.body;
 
     const user = await UserModel.findByCredentials(email, password);
+    if (!user) {
+      const error = new Error("Invalid password or email");
+      error.httpStatusCode = 404;
+      throw error;
+    }
 
     const tokenPairs = await getTokenPairs(user);
     res.send(tokenPairs);

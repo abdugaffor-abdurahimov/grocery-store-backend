@@ -1,3 +1,4 @@
+const Authorization = require("../middlewares/Authorization");
 const UserModel = require("../models/userModel");
 const { getTokenPairs } = require("../utils");
 
@@ -30,7 +31,7 @@ router.post("/login", async (req, res, next) => {
   }
 });
 
-router.post("/me", async (req, res, next) => {
+router.get("/me", Authorization, async (req, res, next) => {
   try {
     res.send(req.user);
   } catch (error) {

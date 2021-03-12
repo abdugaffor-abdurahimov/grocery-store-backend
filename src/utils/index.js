@@ -3,13 +3,13 @@ const jwt = require("jsonwebtoken");
 
 const getTokenPairs = async (user) => {
   try {
-    const refreshToken = await generateToken(
+    const accessToken = await generateToken(
       { _id: user._id },
       ACCESS_TOKEN_SECRET,
       "30m"
     );
 
-    const accessToken = await generateToken(
+    const refreshToken = await generateToken(
       { _id: user._id },
       REFRESH_TOKEN_SECRET,
       "1 week"
@@ -29,12 +29,13 @@ const generateToken = (payload, private_key, duration = "1 week") =>
     })
   );
 
-const verifyToken = (token, private_key) =>
-  new Promise((resolve, reject) =>
-    jwt.verify(token, private_key, (err, decoded) => {
+const verifyToken = (token, privateKey) => {
+  return new Promise((resolve, reject) =>
+    jwt.verify(token, privateKey, (err, decoded) => {
       if (err) reject(err);
       resolve(decoded);
     })
   );
+};
 
 module.exports = { getTokenPairs, verifyToken };

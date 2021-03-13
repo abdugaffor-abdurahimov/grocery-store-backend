@@ -1,6 +1,6 @@
 const Authorization = require("../middlewares/Authorization");
 const UserModel = require("../models/userModel");
-const { getTokenPairs } = require("../utils");
+const { verifyToken, getTokenPairs } = require("../utils");
 
 const router = require("express").Router();
 
@@ -27,6 +27,33 @@ router.post("/login", async (req, res, next) => {
     const tokenPairs = await getTokenPairs(user);
     res.send(tokenPairs);
   } catch (error) {
+    next(error);
+  }
+});
+
+router.get("/refreshToken", async (req, res, next) => {
+  try {
+    // const refreshToken = req.body.refreshToken;
+    const refreshToken = req.header("Authorization").replace("Bearer ", "");
+
+    if (!refreshToken) {
+      const err = new Error("Refresh Token Misiing");
+      err.httpStatusCode = 403;
+      throw err;
+    }
+
+    const decoded = await verifyToken(
+      refreshToken,
+      process.env.REFRESH_TOKEN_SECRET
+    );
+
+    const user = await UserModel.findById(decoded._id);
+
+    const newTokens = await getTokenPairs(user);
+
+    res.send(newTokens);
+  } catch (error) {
+    console.log(error);
     next(error);
   }
 });

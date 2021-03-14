@@ -20,6 +20,7 @@ const ProductSchema = new Schema({
       "Canned GoodsView",
     ],
   },
+  userId: { type: Schema.Types.ObjectId, ref: "users" },
 });
 
 ProductSchema.methods.toJSON = function () {

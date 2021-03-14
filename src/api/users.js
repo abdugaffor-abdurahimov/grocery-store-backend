@@ -1,7 +1,7 @@
 const Authorization = require("../middlewares/Authorization");
 const UserModel = require("../models/userModel");
 const { verifyToken, getTokenPairs } = require("../utils");
-
+const q2m = require("query-to-mongo");
 const router = require("express").Router();
 
 router.post("/register", async (req, res, next) => {
@@ -68,8 +68,14 @@ router.get("/me", Authorization, async (req, res, next) => {
 
 router.get("/", async (req, res, next) => {
   try {
-    const users = await UserModel.find();
-    res.send(users);
+    const query = q2m(req.query);
+    const total = await UserModel.countDocuments(query.criteria);
+
+    const users = await UserModel.find(query.criteria)
+      .skip(query.options.skip)
+      .limit(query.options.limit);
+
+    res.send({ next: query.links("", total), data: users });
   } catch (error) {
     next(error);
   }

@@ -7,3 +7,7 @@
 - PORT
 - REFRESH_TOKEN_SECRET
 - ACCESS_TOKEN_SECRET
+
+#### Features
+
+- Token based authentication

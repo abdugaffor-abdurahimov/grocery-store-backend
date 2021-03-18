@@ -4,7 +4,7 @@ const ProductSchema = new Schema({
   name: { type: String, required: true },
   price: { type: Number, required: true },
   images: [{ type: String, required: true }],
-  details: { type: String, required: true },
+  description: { type: String, required: true },
   category: {
     type: String,
     required: true,
@@ -28,6 +28,7 @@ ProductSchema.methods.toJSON = function () {
   const userObj = user.toObject();
 
   delete userObj.__v;
+  delete userObj.userId;
 
   return userObj;
 };

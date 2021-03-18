@@ -20,7 +20,18 @@ router.get("/", async (req, res, next) => {
       .skip(query.options.skip)
       .limit(query.options.limit);
 
-    res.send({ next: query.links("", total), data });
+    res.send(data);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.get("/:id", async (req, res, next) => {
+  try {
+    const user = await ProductModel.findById(req.params.id);
+    if (user) res.send(user);
+
+    res.status(404).send("Not Found");
   } catch (error) {
     next(error);
   }

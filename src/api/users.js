@@ -2,6 +2,7 @@ const Authorization = require("../middlewares/Authorization");
 const UserModel = require("../models/userModel");
 const { verifyToken, getTokenPairs } = require("../utils");
 const q2m = require("query-to-mongo");
+const CartModel = require("../models/cartModel");
 const router = require("express").Router();
 
 router.post("/register", async (req, res, next) => {
@@ -60,7 +61,8 @@ router.get("/refreshToken", async (req, res, next) => {
 
 router.get("/me", Authorization, async (req, res, next) => {
   try {
-    res.send(req.user);
+    const carts = await CartModel.find({ userId: req.user._id });
+    res.send({ user: req.user, carts: carts });
   } catch (error) {
     next(error);
   }

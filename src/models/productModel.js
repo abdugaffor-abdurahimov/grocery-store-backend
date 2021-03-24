@@ -8,17 +8,7 @@ const ProductSchema = new Schema({
   category: {
     type: String,
     required: true,
-    enum: [
-      "Meat & SeafoodView",
-      "Healthy Snacking",
-      "Heat & Eat MealsView",
-      "Easter Candy",
-      "St. Patrick's Day SipsView",
-      "Fresh Vegetables",
-      "Fresh Fruit",
-      "CheeseView",
-      "Canned GoodsView",
-    ],
+    enum: ["Dried Fruits", "Canned GoodsView"],
   },
   userId: { type: Schema.Types.ObjectId, ref: "users" },
 });

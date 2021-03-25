@@ -2,7 +2,6 @@ const Authorization = require("../middlewares/Authorization");
 const UserModel = require("../models/userModel");
 const { verifyToken, getTokenPairs } = require("../utils");
 const q2m = require("query-to-mongo");
-const CartModel = require("../models/cartModel");
 const router = require("express").Router();
 
 router.post("/register", async (req, res, next) => {
@@ -61,8 +60,7 @@ router.get("/refreshToken", async (req, res, next) => {
 
 router.get("/me", Authorization, async (req, res, next) => {
   try {
-    const carts = await CartModel.find({ userId: req.user._id });
-    res.send({ user: req.user, carts: carts });
+    res.send(req.user);
   } catch (error) {
     next(error);
   }
@@ -79,6 +77,23 @@ router.get("/", async (req, res, next) => {
 
     res.send({ next: query.links("", total), data: users });
   } catch (error) {
+    next(error);
+  }
+});
+
+router.post("/:userId/addToCart", async (req, res, next) => {
+  try {
+    const { cart } = await UserModel.findByIdAndUpdate(
+      req.params.userId,
+      {
+        $push: { cart: req.body },
+      },
+      { new: true }
+    );
+
+    res.status(201).send(cart);
+  } catch (error) {
+    console.log(error);
     next(error);
   }
 });

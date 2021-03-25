@@ -11,8 +11,10 @@ const Authorization = async (req, res, next) => {
       process.env.ACCESS_TOKEN_SECRET
     );
 
-    const user = await UserModel.findById(decoded._id);
-
+    const user = await UserModel.findOne({ _id: decoded._id }).populate({
+      path: "cart.product",
+      select: { name: 1, price: 1, images: 1 },
+    });
     req.user = user;
     req.token = accessToken;
     next();

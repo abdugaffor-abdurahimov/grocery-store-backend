@@ -12,6 +12,16 @@ const userSchema = new Schema({
     enum: ["admin", "user"],
     default: "user",
   },
+  cart: [
+    {
+      _id: false,
+      product: {
+        type: Schema.Types.ObjectId,
+        ref: "Product",
+      },
+      amount: { type: Number, required: true },
+    },
+  ],
 });
 
 userSchema.methods.toJSON = function () {

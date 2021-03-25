@@ -89,7 +89,10 @@ router.post("/:userId/addToCart", async (req, res, next) => {
         $push: { cart: req.body },
       },
       { new: true }
-    );
+    ).populate({
+      path: "cart.product",
+      select: { name: 1, price: 1, images: 1 },
+    });
 
     res.status(201).send(cart);
   } catch (error) {

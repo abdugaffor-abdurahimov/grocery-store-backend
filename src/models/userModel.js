@@ -54,17 +54,12 @@ userSchema.static("calculateCartTotal", async function (id) {
 userSchema.static(
   "updateCartAmount",
   async function (userId, productId, amount) {
-    const result = await this.findOneAndUpdate(
+    await this.findOneAndUpdate(
       { _id: userId, "cart.product": productId },
       { "cart.$.amount": amount }
     );
-  },
-  { new: true }
+  }
 );
-
-userSchema.static("deleteProductFromCart", async function () {
-  await this.findOneAndUpdate({ _id: userId, "cart.product": productId }, {});
-});
 
 userSchema.pre("save", async function (next) {
   const user = this;

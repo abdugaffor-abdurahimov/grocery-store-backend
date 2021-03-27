@@ -104,9 +104,16 @@ router.post("/:userId/addToCart", async (req, res, next) => {
 router.put("/:userId/updateCartAmout/:productId", async (req, res, next) => {
   try {
     const { userId, productId } = req.params;
-    await UserModel.updateCartAmount(userId, productId, req.body.amount);
+    const { cart } = await UserModel.findOneAndUpdate(
+      { _id: userId, "cart.product": productId },
+      { "cart.$.amount": req.body.amount },
+      { new: true }
+    ).populate({
+      path: "cart.product",
+      select: { name: 1, price: 1, images: 1 },
+    });
 
-    res.send("Quantity incremented");
+    res.send(cart);
   } catch (error) {
     next(error);
   }

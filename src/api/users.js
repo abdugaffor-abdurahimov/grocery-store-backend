@@ -103,11 +103,29 @@ router.post("/:userId/addToCart", async (req, res, next) => {
 
 router.put("/:userId/updateCartAmout/:productId", async (req, res, next) => {
   try {
-    console.log(req.body.amount);
     const { userId, productId } = req.params;
-    await UserModel.usdateCartAmount(userId, productId, req.body.amount);
+    await UserModel.updateCartAmount(userId, productId, req.body.amount);
 
     res.send("Quantity incremented");
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.delete("/:userId/updateCart/:productId", async (req, res, next) => {
+  try {
+    const { cart } = await UserModel.findByIdAndUpdate(
+      req.params.userId,
+      {
+        $pull: { cart: { product: req.params.productId } },
+      },
+      { new: true }
+    ).populate({
+      path: "cart.product",
+      select: { name: 1, price: 1, images: 1 },
+    });
+
+    res.status(202).send(cart);
   } catch (error) {
     next(error);
   }

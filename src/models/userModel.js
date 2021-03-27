@@ -52,13 +52,14 @@ userSchema.static("calculateCartTotal", async function (id) {
 });
 
 userSchema.static(
-  "usdateCartAmount",
+  "updateCartAmount",
   async function (userId, productId, amount) {
-    await this.findOneAndUpdate(
+    const result = await this.findOneAndUpdate(
       { _id: userId, "cart.product": productId },
       { "cart.$.amount": amount }
     );
-  }
+  },
+  { new: true }
 );
 
 userSchema.static("deleteProductFromCart", async function () {

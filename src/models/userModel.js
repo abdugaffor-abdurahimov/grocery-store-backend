@@ -46,6 +46,25 @@ userSchema.statics.findByCredentials = async function (email, plainPW) {
   return null;
 };
 
+userSchema.static("calculateCartTotal", async function (id) {
+  const { cart } = await this.findById(id);
+  // return
+});
+
+userSchema.static(
+  "usdateCartAmount",
+  async function (userId, productId, amount) {
+    await this.findOneAndUpdate(
+      { _id: userId, "cart.product": productId },
+      { "cart.$.amount": amount }
+    );
+  }
+);
+
+userSchema.static("deleteProductFromCart", async function () {
+  await this.findOneAndUpdate({ _id: userId, "cart.product": productId }, {});
+});
+
 userSchema.pre("save", async function (next) {
   const user = this;
   const plainPW = user.password;

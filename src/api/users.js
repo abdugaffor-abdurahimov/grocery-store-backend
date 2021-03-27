@@ -101,4 +101,16 @@ router.post("/:userId/addToCart", async (req, res, next) => {
   }
 });
 
+router.put("/:userId/updateCartAmout/:productId", async (req, res, next) => {
+  try {
+    console.log(req.body.amount);
+    const { userId, productId } = req.params;
+    await UserModel.usdateCartAmount(userId, productId, req.body.amount);
+
+    res.send("Quantity incremented");
+  } catch (error) {
+    next(error);
+  }
+});
+
 module.exports = router;

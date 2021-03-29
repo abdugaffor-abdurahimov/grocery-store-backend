@@ -9,8 +9,8 @@ const userSchema = new Schema({
   googleId: { type: String, default: null },
   role: {
     type: String,
-    enum: ["admin", "user"],
-    default: "user",
+    enum: ["admin", "customer"],
+    default: "customer",
   },
   cart: [
     {
@@ -45,11 +45,6 @@ userSchema.statics.findByCredentials = async function (email, plainPW) {
   }
   return null;
 };
-
-userSchema.static("calculateCartTotal", async function (id) {
-  const { cart } = await this.findById(id);
-  // return
-});
 
 userSchema.static(
   "updateCartAmount",

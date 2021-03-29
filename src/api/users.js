@@ -3,12 +3,35 @@ const UserModel = require("../models/userModel");
 const { verifyToken, getTokenPairs } = require("../utils");
 const q2m = require("query-to-mongo");
 const router = require("express").Router();
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+
+router.post("/payment", async (req, res, next) => {
+  try {
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+});
 
 router.post("/register", async (req, res, next) => {
   try {
-    const { _id } = await UserModel.create(req.body);
-    res.send(_id);
+    // const user = await UserModel.create(req.body);
+    const user = new UserModel(req.body);
+
+    // const customer = await stripe.customers.create({
+    //   id: user._id,
+    //   object: user.role,
+    //   currency: "usd",
+    //   description: "My First Test Customer (created for API docs)",
+    //   discount: null,
+    //   email: user.email,
+    //   name: user.firstname,
+    // });
+
+    console.log(user);
+    // res.send(user._id);
   } catch (error) {
+    console.log(error.message);
     next(error);
   }
 });

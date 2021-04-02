@@ -9,7 +9,8 @@ module.exports = {
       url: "https://opensource.org/licenses/MIT",
     },
   },
-  host: "localhost:8000",
+
+  host: process.env.BE_URL,
   basePath: "/api/",
   tags: [
     {
@@ -17,6 +18,7 @@ module.exports = {
       description: "API for users in the system",
     },
   ],
+
   schemes: ["http"],
   consumes: ["application/json"],
   produces: ["application/json"],
@@ -24,7 +26,7 @@ module.exports = {
     "/users": {
       post: {
         tags: ["Users"],
-        description: "Create new user in system",
+        description: "Create new user",
         parameters: [
           {
             name: "user",
@@ -45,6 +47,7 @@ module.exports = {
           },
         },
       },
+
       get: {
         tags: ["Users"],
         summary: "Get all users in system",
@@ -52,12 +55,13 @@ module.exports = {
           200: {
             description: "OK",
             schema: {
-              $ref: "#/definitions/Users",
+              $ref: "#/definitions/User",
             },
           },
         },
       },
     },
+
     "/users/{userId}": {
       parameters: [
         {
@@ -68,6 +72,7 @@ module.exports = {
           type: "string",
         },
       ],
+
       get: {
         tags: ["Users"],
         summary: "Get user with given ID",
@@ -128,17 +133,22 @@ module.exports = {
           type: "string",
           uniqueItems: true,
         },
-        lastName: {
+        lastname: {
           type: "string",
         },
-        firstName: {
+        firstname: {
           type: "string",
         },
+        password: {
+          type: "string",
+        },
+        role: {
+          type: "string",
+          enum: ["admin", "user"],
+          default: "user",
+        },
+        cart: { type: "List of products" },
       },
-    },
-    Users: {
-      type: "array",
-      $ref: "#/definitions/User",
     },
   },
 };

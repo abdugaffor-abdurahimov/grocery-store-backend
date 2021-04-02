@@ -7,12 +7,14 @@ const userRoute = require("../api/users");
 const productsRoute = require("./products");
 
 const options = {
-  explorer: true
+  explorer: true,
 };
 
-
-
-router.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+router.use(
+  "/api-docs",
+  swaggerUi.serve,
+  swaggerUi.setup(swaggerDocument, options)
+);
 
 router.use("/users", userRoute);
 router.use("/products", productsRoute);

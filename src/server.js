@@ -3,7 +3,6 @@ const cors = require("cors");
 const listEndpoints = require("express-list-endpoints");
 const mongoose = require("mongoose");
 const api = require("./api");
-const os = require("os")
 const { PORT, FE_URL, MONGODB_URL, NODE_ENV } = process.env;
 
 const app = express();

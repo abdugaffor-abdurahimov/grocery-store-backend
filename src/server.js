@@ -4,23 +4,25 @@ const listEndpoints = require("express-list-endpoints");
 const mongoose = require("mongoose");
 const api = require("./api");
 const { PORT, FE_URL, MONGODB_URL, NODE_ENV } = process.env;
-
 const app = express();
+const adminRouter = require("./middlewares/admin");
 
-const whitelist = [FE_URL, "http://localhost:8000/api/api-docs/"];
-const corsOptions = {
-  origin: function (origin, callback) {
-    if (whitelist.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      callback(new Error("NOT ALLOWED - CORS ISSUES"));
-    }
-  },
-};
+// const whitelist = [FE_URL];
+// const corsOptions = {
+//   origin: function (origin, callback) {
+//     if (whitelist.indexOf(origin) !== -1) {
+//       callback(null, true);
+//     } else {
+//       callback(new Error("NOT ALLOWED - CORS ISSUES"));
+//     }
+//   },
+// };
 
 app.use(cors());
+
 app.use(express.json());
 app.use("/api", api);
+app.use("/admin", adminRouter);
 
 // Error handlers
 require("./middlewares/errorHandlers")(app);

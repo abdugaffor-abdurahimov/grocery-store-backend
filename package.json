@@ -30,7 +30,8 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.11.19",
     "query-to-mongo": "^0.10.1",
-    "stripe": "^8.139.0"
+    "stripe": "^8.139.0",
+    "swagger-ui-express": "^4.1.6"
   },
   "devDependencies": {
     "dotenv": "^8.2.0",

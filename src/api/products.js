@@ -15,7 +15,6 @@ router.post("/", async (req, res, next) => {
 router.get("/", async (req, res, next) => {
   try {
     const query = q2m(req.query);
-    const total = await ProductModel.countDocuments(query.criteria);
     const data = await ProductModel.find(query.criteria)
       .skip(query.options.skip)
       .limit(query.options.limit);

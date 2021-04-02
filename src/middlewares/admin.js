@@ -7,7 +7,7 @@ const ProductModel = require("../models/productModel");
 AdminBro.registerAdapter(AdminBroMongoose);
 
 const AdminBroOptions = {
-  resources: [UserModel, ProductModel],
+  resources: [ProductModel, UserModel],
 };
 
 const adminBro = new AdminBro(AdminBroOptions);

@@ -10,7 +10,7 @@ const ProductSchema = new Schema({
     required: true,
     enum: ["Dried Fruits", "Canned GoodsView"],
   },
-  userId: { type: Schema.Types.ObjectId, ref: "users" },
+  userId: { type: Schema.Types.ObjectId, ref: "User" },
 });
 
 ProductSchema.methods.toJSON = function () {
@@ -23,6 +23,6 @@ ProductSchema.methods.toJSON = function () {
   return userObj;
 };
 
-const UserModel = model("Product", ProductSchema);
+const ProductModel = model("Product", ProductSchema);
 
-module.exports = UserModel;
+module.exports = ProductModel;

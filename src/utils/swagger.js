@@ -118,7 +118,7 @@ module.exports = {
   },
   definitions: {
     User: {
-      required: ["email", "_id"],
+      required: ["email", "_id", "password"],
       properties: {
         _id: {
           type: "string",

@@ -8,7 +8,7 @@ const { PORT, FE_URL, MONGODB_URL, NODE_ENV } = process.env;
 
 const app = express();
 
-const whitelist = [FE_URL];
+const whitelist = [FE_URL, "http://localhost:8000/api/docs"];
 const corsOptions = {
   origin: function (origin, callback) {
     if (whitelist.indexOf(origin) !== -1) {
@@ -19,7 +19,7 @@ const corsOptions = {
   },
 };
 
-app.use(cors(corsOptions));
+app.use(cors());
 
 app.use(express.json());
 

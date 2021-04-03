@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 const api = require("./api");
 const { PORT, FE_URL, MONGODB_URL, NODE_ENV } = process.env;
 const app = express();
-const adminRouter = require("./middlewares/admin");
+const adminRouter = require("./admin/Admin.config");
 
 // const whitelist = [FE_URL];
 // const corsOptions = {

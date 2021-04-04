@@ -4,23 +4,13 @@ const ProductSchema = new Schema({
   name: { type: String, required: true },
   price: { type: Number, required: true },
   images: [{ type: String, required: true }],
-  details: { type: String, required: true },
+  description: { type: String, required: true },
   category: {
     type: String,
     required: true,
-    enum: [
-      "Meat & SeafoodView",
-      "Healthy Snacking",
-      "Heat & Eat MealsView",
-      "Easter Candy",
-      "St. Patrick's Day SipsView",
-      "Fresh Vegetables",
-      "Fresh Fruit",
-      "CheeseView",
-      "Canned GoodsView",
-    ],
+    enum: ["Dried Fruits", "Canned GoodsView"],
   },
-  userId: { type: Schema.Types.ObjectId, ref: "users" },
+  userId: { type: Schema.Types.ObjectId, ref: "User" },
 });
 
 ProductSchema.methods.toJSON = function () {
@@ -28,10 +18,11 @@ ProductSchema.methods.toJSON = function () {
   const userObj = user.toObject();
 
   delete userObj.__v;
+  delete userObj.userId;
 
   return userObj;
 };
 
-const UserModel = model("Product", ProductSchema);
+const ProductModel = model("Product", ProductSchema);
 
-module.exports = UserModel;
+module.exports = ProductModel;

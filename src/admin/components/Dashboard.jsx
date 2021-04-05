@@ -19,7 +19,7 @@ const Dashboard = () => {
       <Box variant="white">
         <h1>Grocery store {data.some}</h1>
         <br />
-        <a href="/api/api-docs">API Documentation</a>
+        <a href="/api/docs">API Documentation</a>
       </Box>
     </Box>
   );

@@ -4,16 +4,25 @@ const cloudinaryMulter = require("../middlewares/cloudinary.config");
 
 const router = require("express").Router();
 
+router.get("/home/preview", async (req, res, next) => {
+    try {
+        const products = await ProductModel.find({});
+    } catch (error) {
+        next(error);
+    }
+});
+
 router.post(
     "/upload-images/:productId",
     cloudinaryMulter.array("images", 4),
     async (req, res, next) => {
         try {
-            const product = await ProductModel.findById(req.params.productId);
+            const product = await ProductModel.findById("req.params.productId");
+            console.log(product);
 
             if (!product) res.status(404).send("Product not found");
-
             const images = req.files;
+
             images.map(async (img) => {
                 await product.update({ $push: { images: img.path } });
             });

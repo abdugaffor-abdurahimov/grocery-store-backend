@@ -1,8 +1,19 @@
 const ProductModel = require("../models/productModel");
 const q2m = require("query-to-mongo");
 const cloudinaryMulter = require("../middlewares/cloudinary.config");
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 const router = require("express").Router();
+
+router.post("/pay", async (req, res, next) => {
+  try {
+    const charge = await stripe.charges.create(req.body);
+
+    res.send({ charge });
+  } catch (error) {
+    next(error);
+  }
+});
 
 router.get("/home/preview", async (req, res, next) => {
   try {

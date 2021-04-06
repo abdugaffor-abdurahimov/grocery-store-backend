@@ -11,28 +11,88 @@ router.get("/home/preview", async (req, res, next) => {
       data: [
         {
           img:
-            "https://res.cloudinary.com/duq2fqsvm/image/upload/w_500,c_fill,ar_1:1,g_auto,r_max,b_rgb:ffff/v1617626769/GROCERY/piotr-miazga-WBX-ZLr8P7I-unsplash_oqbr1r.jpg",
+            "https://res.cloudinary.com/duq2fqsvm/image/upload/w_200,c_fill,ar_1:1,g_auto,r_max,b_rgb:ffff/v1617626769/GROCERY/piotr-miazga-WBX-ZLr8P7I-unsplash_oqbr1r.jpg",
           name: "Food",
         },
         {
           img:
-            "https://res.cloudinary.com/duq2fqsvm/image/upload/w_500,c_fill,ar_1:1,g_auto,r_max,b_rgb:ffff/v1617626769/GROCERY/piotr-miazga-WBX-ZLr8P7I-unsplash_oqbr1r.jpg",
-          name: "Food",
+            "https://res.cloudinary.com/duq2fqsvm/image/upload/w_200,c_fill,ar_1:1,g_auto,r_max,b_rgb:ffff/v1608107017/samples/ecommerce/shoes.png",
+          name: "Sport",
         },
         {
           img:
-            "https://res.cloudinary.com/duq2fqsvm/image/upload/w_500,c_fill,ar_1:1,g_auto,r_max,b_rgb:ffff/v1617626769/GROCERY/piotr-miazga-WBX-ZLr8P7I-unsplash_oqbr1r.jpg",
-          name: "Food",
+            "https://res.cloudinary.com/duq2fqsvm/image/upload/w_200,c_fill,ar_1:1,g_auto,r_max,b_rgb:ffff/v1608107023/samples/ecommerce/leather-bag-gray.jpg",
+          name: "Luggage, Bags & Cases",
         },
         {
           img:
-            "https://res.cloudinary.com/duq2fqsvm/image/upload/w_500,c_fill,ar_1:1,g_auto,r_max,b_rgb:ffff/v1617626769/GROCERY/piotr-miazga-WBX-ZLr8P7I-unsplash_oqbr1r.jpg",
-          name: "Food",
+            "https://res.cloudinary.com/duq2fqsvm/image/upload/w_200,c_fill,ar_1:1,g_auto,r_max,b_rgb:ffff/v1608107012/samples/ecommerce/analog-classic.jpg",
+          name: "Watches",
         },
       ],
     };
 
-    res.send([categoryShop]);
+    const familyOutdor = {
+      title: "Outdoor family fun",
+      data: [
+        {
+          img:
+            "https://res.cloudinary.com/duq2fqsvm/image/upload/w_200,c_fill,ar_1:1,g_auto,r_max,b_rgb:ffff/v1617626769/GROCERY/piotr-miazga-WBX-ZLr8P7I-unsplash_oqbr1r.jpg",
+          name: "Food",
+        },
+        {
+          img:
+            "https://res.cloudinary.com/duq2fqsvm/image/upload/w_200,c_fill,ar_1:1,g_auto,r_max,b_rgb:ffff/v1608107017/samples/ecommerce/shoes.png",
+          name: "Sport",
+        },
+        {
+          img:
+            "https://res.cloudinary.com/duq2fqsvm/image/upload/w_200,c_fill,ar_1:1,g_auto,r_max,b_rgb:ffff/v1608107023/samples/ecommerce/leather-bag-gray.jpg",
+          name: "Luggage, Bags & Cases",
+        },
+        {
+          img:
+            "https://res.cloudinary.com/duq2fqsvm/image/upload/w_200,c_fill,ar_1:1,g_auto,r_max,b_rgb:ffff/v1608107012/samples/ecommerce/analog-classic.jpg",
+          name: "Watches",
+        },
+      ],
+    };
+
+    const foods = {
+      title: "Food",
+      data: [
+        {
+          img:
+            "https://res.cloudinary.com/duq2fqsvm/image/upload/w_200,ar_1:1,c_fill,g_auto,e_art:hokusai/v1608107014/samples/food/fish-vegetables.jpg",
+          name: "Fish vegitables",
+        },
+        {
+          img:
+            "https://res.cloudinary.com/duq2fqsvm/image/upload/w_200,ar_1:1,c_fill,g_auto,e_art:hokusai/v1608107013/samples/food/dessert.jpg",
+          name: "Dessert",
+        },
+        {
+          img:
+            "https://res.cloudinary.com/duq2fqsvm/image/upload/w_200,ar_1:1,c_fill,g_auto,e_art:hokusai/v1608107015/samples/food/pot-mussels.jpg",
+          name: "Pot mussels",
+        },
+        {
+          img:
+            "https://res.cloudinary.com/duq2fqsvm/image/upload/w_200,ar_1:1,c_fill,g_auto,e_art:hokusai/v1608107024/samples/food/spices.jpg",
+          name: "Spices",
+        },
+      ],
+    };
+
+    const instpired = {
+      title: "Inspired by your shopping",
+      data: [
+        { img: "", name: "" },
+        { img: "", name: "" },
+      ],
+    };
+
+    res.send([categoryShop, foods, familyOutdor, instpired]);
   } catch (error) {
     next(error);
   }

@@ -8,7 +8,6 @@ const router = require("express").Router();
 router.post("/pay", async (req, res, next) => {
   try {
     const charge = await stripe.charges.create(req.body);
-
     res.send({ charge });
   } catch (error) {
     next(error);

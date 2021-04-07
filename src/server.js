@@ -3,7 +3,7 @@ const cors = require("cors");
 const listEndpoints = require("express-list-endpoints");
 const mongoose = require("mongoose");
 const api = require("./api");
-const { PORT, FE_URL, MONGODB_URL, NODE_ENV, STRIPE_SECRET_KEY } = process.env;
+const { PORT, FE_URL, MONGODB_URL, NODE_ENV } = process.env;
 const app = express();
 const adminRouter = require("./admin/Admin.config");
 
@@ -18,7 +18,7 @@ const corsOptions = {
   },
 };
 
-app.use(cors(corsOptions));
+app.use(cors());
 app.use(express.json());
 app.use("/api", api);
 app.use("/admin", adminRouter);

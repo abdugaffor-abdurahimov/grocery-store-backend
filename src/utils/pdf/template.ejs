@@ -17,8 +17,8 @@
       <% if (products.length) { %>
       <tr>
         <% products.forEach(function (product) { %>
-        <td id="quantity"><%= product.quantity %></td>
-        <td id="unitPrice"><%= product.unitPrice %></td>
+        <td id="quantity"><%= product.amount %>kg</td>
+        <td id="unitPrice"><%= product.price %></td>
         <td id="totalPrice"><%= product.totalPrice %></td>
         <% }) %>
       </tr>

@@ -1,8 +1,13 @@
 const ProductModel = require("../models/productModel");
 const q2m = require("query-to-mongo");
 const cloudinaryMulter = require("../middlewares/cloudinary.config");
-const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
-const mailtrap = process.env.MAIL_TRAP_NAME;
+const {
+  mailTrapName,
+  mailTrapPassword,
+  stripeSecretKey,
+} = require("../config/env");
+
+const stripe = require("stripe")(stripeSecretKey);
 
 const nodemailer = require("nodemailer");
 
@@ -16,8 +21,8 @@ router.post("/pay", async (req, res, next) => {
       host: "smtp.mailtrap.io",
       port: 2525,
       auth: {
-        user: mailtrap,
-        pass: process.env.MAIL_TRAP_PASSWORD,
+        user: mailTrapName,
+        pass: mailTrapPassword,
       },
     });
 
@@ -28,10 +33,21 @@ router.post("/pay", async (req, res, next) => {
       text: JSON.stringify(charge), // Plain text body
     };
 
-    transporter.sendMail(message, function (err, info) {
-      if (err) console.log(err);
-      console.log(info);
+    const info = await transporter.sendMail(message, (error, info) => {
+      if (error) {
+        console.log("Error occurred");
+        console.log("error.message", error.message);
+        return process.exit(1);
+      }
+
+      console.log("Message sent successfully!");
+      console.log(nodemailer.getTestMessageUrl(info));
+
+      // only needed when using pooled connections
+      // transporter.close();
     });
+
+    console.log(info);
 
     res.send({ charge });
   } catch (error) {

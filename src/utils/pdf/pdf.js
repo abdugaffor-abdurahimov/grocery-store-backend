@@ -1,8 +1,8 @@
 const ejs = require("ejs");
 const htmlPdf = require("html-pdf");
 
-export async function htmlToPdfBuffer(pathname, params) {
-  const html = await ejs.renderFile(pathname, params);
+module.exports = async function htmlToPdfBuffer(params) {
+  const html = await ejs.renderFile("./template.ejs", params);
 
   return new Promise((resolve, reject) => {
     htmlPdf.create(html).toBuffer((err, buffer) => {
@@ -10,4 +10,4 @@ export async function htmlToPdfBuffer(pathname, params) {
       resolve(buffer);
     });
   });
-}
+};

@@ -2,12 +2,37 @@ const ProductModel = require("../models/productModel");
 const q2m = require("query-to-mongo");
 const cloudinaryMulter = require("../middlewares/cloudinary.config");
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+const mailtrap = process.env.MAIL_TRAP_NAME;
+
+const nodemailer = require("nodemailer");
 
 const router = require("express").Router();
 
 router.post("/pay", async (req, res, next) => {
   try {
     const charge = await stripe.charges.create(req.body);
+
+    const transporter = nodemailer.createTransport({
+      host: "smtp.mailtrap.io",
+      port: 2525,
+      auth: {
+        user: mailtrap,
+        pass: process.env.MAIL_TRAP_PASSWORD,
+      },
+    });
+
+    const message = {
+      from: "abdurahimov.97@list.ru", // Sender address
+      to: req.body.receipt_email, // List of recipients
+      subject: "Billing Information", // Subject line
+      text: JSON.stringify(charge), // Plain text body
+    };
+
+    transporter.sendMail(message, function (err, info) {
+      if (err) console.log(err);
+      console.log(info);
+    });
+
     res.send({ charge });
   } catch (error) {
     next(error);

@@ -11,6 +11,14 @@ const ProductSchema = new Schema({
     enum: ["Dried Fruits", "Canned GoodsView"],
   },
   userId: { type: Schema.Types.ObjectId, ref: "User" },
+  comments: [
+    {
+      text: { type: String, required: true },
+      comment: { type: String, required: true },
+      user: { type: Schema.Types.ObjectId, ref: "User" },
+      rate: { type: Number, required: true },
+    },
+  ],
 });
 
 ProductSchema.methods.toJSON = function () {

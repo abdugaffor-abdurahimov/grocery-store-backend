@@ -1,25 +1,31 @@
-const { mailTrapName, mailTrapPassword } = require("../config/env");
 const nodemailer = require("nodemailer");
 
-module.exports = senEmailWithAttachment = () => {
-  // const ses = new AWS.SES();
-
+module.exports = senEmailWithAttachment = (toUser) => {
   const transporter = nodemailer.createTransport({
-    host: "smtp.mailtrap.io",
-    port: 2525,
+    service: "gmail",
     auth: {
-      user: mailTrapName,
-      pass: mailTrapPassword,
+      type: "OAuth2",
+      user: process.env.MAIL_USERNAME,
+      pass: process.env.MAIL_PASSWORD,
+      clientId: process.env.OAUTH_CLIENTID,
+      clientSecret: process.env.OAUTH_CLIENT_SECRET,
+      refreshToken: process.env.OAUTH_REFRESH_TOKEN,
     },
   });
-  const message = {
-    from: "abdurahimov.97@list.ru", // Sender address
-    to: "to@email.com", // List of recipients
-    subject: "Design Your Model S | Tesla", // Subject line
-    text: "Have the most fun you can in a car. Get your Tesla today!", // Plain text body
+
+  const mailOptions = {
+    from: " abdulgaffaribnrasul@gmail.com",
+    to: toUser,
+    subject: "Billing Information",
+    text: "TEST",
   };
-  transporter.sendMail(message, function (err, info) {
-    if (err) console.log(err);
-    console.log(info);
+
+  transporter.sendMail(mailOptions, function (err, data) {
+    if (err) {
+      console.log("Error ", err);
+    } else {
+      console.log("Email sent");
+      console.log(data);
+    }
   });
 };

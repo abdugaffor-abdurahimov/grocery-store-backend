@@ -1,54 +1,17 @@
 const ProductModel = require("../models/productModel");
 const q2m = require("query-to-mongo");
 const cloudinaryMulter = require("../middlewares/cloudinary.config");
-const {
-  mailTrapName,
-  mailTrapPassword,
-  stripeSecretKey,
-} = require("../config/env");
+const { stripeSecretKey } = require("../config/env");
+const senEmailWithAttachment = require("../utils/email");
 
 const stripe = require("stripe")(stripeSecretKey);
-
-const nodemailer = require("nodemailer");
-
 const router = require("express").Router();
 
 router.post("/pay", async (req, res, next) => {
   try {
     const charge = await stripe.charges.create(req.body);
-
-    const transporter = nodemailer.createTransport({
-      host: "smtp.mailtrap.io",
-      port: 2525,
-      auth: {
-        user: mailTrapName,
-        pass: mailTrapPassword,
-      },
-    });
-
-    const message = {
-      from: "abdurahimov.97@list.ru", // Sender address
-      to: req.body.receipt_email, // List of recipients
-      subject: "Billing Information", // Subject line
-      text: JSON.stringify(charge), // Plain text body
-    };
-
-    const info = await transporter.sendMail(message, (error, info) => {
-      if (error) {
-        console.log("Error occurred");
-        console.log("error.message", error.message);
-        return process.exit(1);
-      }
-
-      console.log("Message sent successfully!");
-      console.log(nodemailer.getTestMessageUrl(info));
-
-      // only needed when using pooled connections
-      // transporter.close();
-    });
-
+    const info = await senEmailWithAttachment(req.body.receipt_email);
     console.log(info);
-
     res.send({ charge });
   } catch (error) {
     next(error);

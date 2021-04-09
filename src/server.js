@@ -3,13 +3,13 @@ const cors = require("cors");
 const listEndpoints = require("express-list-endpoints");
 const mongoose = require("mongoose");
 const api = require("./api");
-const { PORT, FE_URL, MONGODB_URL, NODE_ENV } = process.env;
+const { PORT, FE_URL, MONGODB_URL, NODE_ENV, APP_URL } = process.env;
 const app = express();
 const adminRouter = require("./admin/Admin.config");
 
-const whitelist = [FE_URL];
+const whitelist = [FE_URL, APP_URL];
 const corsOptions = {
-  origin: (origin, callback) => {
+  origin: function (origin, callback) {
     if (whitelist.indexOf(origin) !== -1 || !origin) {
       callback(null, true);
     } else {
@@ -18,7 +18,7 @@ const corsOptions = {
   },
 };
 
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use("/api", api);
 app.use("/admin", adminRouter);

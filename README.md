@@ -6,6 +6,7 @@ API documentation: [Docs](https://grocery-stroe-api.herokuapp.com/api/docs)
 .env config
 
 - FE_URL='frontend url'
+- APP_URL=backend url
 - DATABASE_URL='mongodb atlas url'
 - PORT=8080
 - REFRESH_TOKEN_SECRET='random string'

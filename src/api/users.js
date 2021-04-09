@@ -3,6 +3,9 @@ const UserModel = require("../models/userModel");
 const { verifyToken, getTokenPairs } = require("../utils");
 const q2m = require("query-to-mongo");
 const router = require("express").Router();
+const userController = require("../controllers/userController");
+
+router.get("/:userId/card/csv", userController.download);
 
 router.post("/register", async (req, res, next) => {
   try {

@@ -46,6 +46,12 @@ userSchema.statics.findByCredentials = async function (email, plainPW) {
   return null;
 };
 
+userSchema.static("findAllCard", async function (id) {
+  await this.findById(id).populate({
+    path: "cart.product",
+  });
+});
+
 userSchema.static("calculateCartTotal", async function (id) {
   const { cart } = await this.findById(id);
   // return

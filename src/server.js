@@ -7,19 +7,18 @@ const { PORT, FE_URL, MONGODB_URL, NODE_ENV } = process.env;
 const app = express();
 const adminRouter = require("./admin/Admin.config");
 
-// const whitelist = [FE_URL];
-// const corsOptions = {
-//   origin: function (origin, callback) {
-//     if (whitelist.indexOf(origin) !== -1) {
-//       callback(null, true);
-//     } else {
-//       callback(new Error("NOT ALLOWED - CORS ISSUES"));
-//     }
-//   },
-// };
+const whitelist = [FE_URL];
+const corsOptions = {
+  origin: (origin, callback) => {
+    if (whitelist.indexOf(origin) !== -1 || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error("NOT ALLOWED BY CORS"));
+    }
+  },
+};
 
 app.use(cors());
-
 app.use(express.json());
 app.use("/api", api);
 app.use("/admin", adminRouter);

@@ -14,6 +14,12 @@ API documentation: [Docs](https://grocery-stroe-api.herokuapp.com/api/docs)
 - CLOUDINARY_API_KEY="cloudinary.com -> api-key"
 - CLOUDINARY_API_SECRET="cloudinary.com -> api-secret"
 
+- MAIL_USERNAME=> Google Oauth cridential
+- MAIL_PASSWORD=> Google Oauth cridential
+- OAUTH_CLIENTID=> Google Oauth cridential
+- OAUTH_CLIENT_SECRET=> Google Oauth cridential
+- OAUTH_REFRESH_TOKEN=> Google Oauth cridential
+
 #### Features
 
 - Token based authentication

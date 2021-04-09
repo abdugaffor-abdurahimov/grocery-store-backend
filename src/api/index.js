@@ -10,11 +10,7 @@ const options = {
   explorer: true,
 };
 
-router.use(
-  "/api-docs",
-  swaggerUi.serve,
-  swaggerUi.setup(swaggerDocument, options)
-);
+router.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument, options));
 
 router.use("/users", userRoute);
 router.use("/products", productsRoute);

@@ -12,6 +12,16 @@ const userSchema = new Schema({
     enum: ["admin", "user"],
     default: "user",
   },
+  cart: [
+    {
+      _id: false,
+      product: {
+        type: Schema.Types.ObjectId,
+        ref: "Product",
+      },
+      amount: { type: Number, required: true },
+    },
+  ],
 });
 
 userSchema.methods.toJSON = function () {
@@ -35,6 +45,27 @@ userSchema.statics.findByCredentials = async function (email, plainPW) {
   }
   return null;
 };
+
+userSchema.static("findAllCard", async function (id) {
+  await this.findById(id).populate({
+    path: "cart.product",
+  });
+});
+
+userSchema.static("calculateCartTotal", async function (id) {
+  const { cart } = await this.findById(id);
+  // return
+});
+
+userSchema.static(
+  "updateCartAmount",
+  async function (userId, productId, amount) {
+    await this.findOneAndUpdate(
+      { _id: userId, "cart.product": productId },
+      { "cart.$.amount": amount }
+    );
+  }
+);
 
 userSchema.pre("save", async function (next) {
   const user = this;

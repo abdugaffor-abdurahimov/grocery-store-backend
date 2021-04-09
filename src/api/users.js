@@ -3,6 +3,9 @@ const UserModel = require("../models/userModel");
 const { verifyToken, getTokenPairs } = require("../utils");
 const q2m = require("query-to-mongo");
 const router = require("express").Router();
+const userController = require("../controllers/userController");
+
+router.get("/:userId/card/csv", userController.download);
 
 router.post("/register", async (req, res, next) => {
   try {
@@ -76,6 +79,63 @@ router.get("/", async (req, res, next) => {
       .limit(query.options.limit);
 
     res.send({ next: query.links("", total), data: users });
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.post("/:userId/addToCart", async (req, res, next) => {
+  try {
+    const { cart } = await UserModel.findByIdAndUpdate(
+      req.params.userId,
+      {
+        $push: { cart: req.body },
+      },
+      { new: true }
+    ).populate({
+      path: "cart.product",
+      select: { name: 1, price: 1, images: 1 },
+    });
+
+    res.status(201).send(cart);
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+});
+
+router.put("/:userId/updateCartAmout/:productId", async (req, res, next) => {
+  try {
+    const { userId, productId } = req.params;
+    const { cart } = await UserModel.findOneAndUpdate(
+      { _id: userId, "cart.product": productId },
+      { "cart.$.amount": req.body.amount },
+      { new: true }
+    ).populate({
+      path: "cart.product",
+      select: { name: 1, price: 1, images: 1 },
+    });
+
+    res.send(cart);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.delete("/:userId/updateCart/:productId", async (req, res, next) => {
+  try {
+    const { cart } = await UserModel.findByIdAndUpdate(
+      req.params.userId,
+      {
+        $pull: { cart: { product: req.params.productId } },
+      },
+      { new: true }
+    ).populate({
+      path: "cart.product",
+      select: { name: 1, price: 1, images: 1 },
+    });
+
+    res.status(202).send(cart);
   } catch (error) {
     next(error);
   }

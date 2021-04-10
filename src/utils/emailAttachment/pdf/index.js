@@ -1,4 +1,3 @@
-const { log } = require("console");
 const ejs = require("ejs");
 // const htmlPdf = require("html-pdf");
 const path = require("path");
@@ -24,8 +23,6 @@ const htmlToPdfBuffer = async (userAddress) => {
       ...item.product,
       images: item.product.images[0],
     }));
-
-    log(items[0].images);
 
     const html = await ejs.renderFile(pathname, {
       products: items,

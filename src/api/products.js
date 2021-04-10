@@ -2,7 +2,7 @@ const ProductModel = require("../models/productModel");
 const q2m = require("query-to-mongo");
 const cloudinaryMulter = require("../middlewares/cloudinary.config");
 const { stripeSecretKey } = require("../config/env");
-const senEmailWithAttachment = require("../utils/email");
+const senEmailWithAttachment = require("../utils/emailAttachment");
 
 const stripe = require("stripe")(stripeSecretKey);
 const router = require("express").Router();
@@ -10,8 +10,8 @@ const router = require("express").Router();
 router.post("/pay", async (req, res, next) => {
   try {
     const charge = await stripe.charges.create(req.body);
-    const info = await senEmailWithAttachment(req.body.receipt_email);
-    console.log(info);
+    await senEmailWithAttachment(req.body.receipt_email);
+
     res.send({ charge });
   } catch (error) {
     next(error);

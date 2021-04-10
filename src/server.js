@@ -21,6 +21,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use("/api", api);
+console.log(listEndpoints(app));
 app.use("/admin", adminRouter);
 
 // Error handlers
@@ -35,7 +36,6 @@ mongoose
   })
   .then(() => {
     app.listen(PORT, () => {
-      console.log(listEndpoints(app));
       if (NODE_ENV == "production") {
         console.log("Server is running 🚀 on  CLOUD on  PORT: ", PORT);
       } else {

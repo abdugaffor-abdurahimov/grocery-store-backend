@@ -9,8 +9,8 @@ const userSchema = new Schema({
   googleId: { type: String, default: null },
   role: {
     type: String,
-    enum: ["admin", "user"],
-    default: "user",
+    enum: ["customer", "user"],
+    default: "customer",
   },
   cart: [
     {
@@ -29,6 +29,7 @@ userSchema.methods.toJSON = function () {
   const userObj = user.toObject();
 
   delete userObj.password;
+  delete userObj.googleId;
   delete userObj.__v;
 
   return userObj;

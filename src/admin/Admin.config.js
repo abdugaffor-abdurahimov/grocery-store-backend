@@ -1,13 +1,15 @@
 const AdminBro = require("admin-bro");
-const AdminBroExpress = require("@admin-bro/express");
+const { buildAuthenticatedRouter } = require("@admin-bro/express");
 const AdminBroMongoose = require("@admin-bro/mongoose");
 const UserModel = require("../models/userModel");
-const ProductModel = require("../models/productModel");
 const bcrypt = require("bcryptjs");
+const User = require("./options/user.options");
+const Product = require("./options/product.options");
+
 AdminBro.registerAdapter(AdminBroMongoose);
 
 const AdminBroOptions = {
-  resources: [ProductModel, UserModel],
+  resources: [Product, User],
   dashboard: {
     handler: async () => {
       return { some: "USER DATA" };
@@ -21,7 +23,7 @@ const AdminBroOptions = {
 
 const adminBro = new AdminBro(AdminBroOptions);
 
-const adminRouter = AdminBroExpress.buildAuthenticatedRouter(adminBro, {
+const adminRouter = buildAuthenticatedRouter(adminBro, {
   authenticate: async (email, password) => {
     const user = await UserModel.findOne({ email });
 

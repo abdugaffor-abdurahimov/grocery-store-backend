@@ -22,13 +22,15 @@ const ProductSchema = new Schema({
 });
 
 ProductSchema.methods.toJSON = function () {
-  const user = this;
-  const userObj = user.toObject();
+  const product = this;
+  const productObj = product.toObject();
 
-  delete userObj.__v;
-  delete userObj.userId;
+  productObj.comments.reverse();
 
-  return userObj;
+  delete productObj.__v;
+  delete productObj.userId;
+
+  return productObj;
 };
 
 const ProductModel = model("Product", ProductSchema);

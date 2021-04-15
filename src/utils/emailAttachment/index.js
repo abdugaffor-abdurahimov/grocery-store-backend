@@ -31,7 +31,13 @@ const senEmailWithAttachment = async (userAddress) => {
         } else {
           resolve(data);
         }
-      });
+      })
+        .then((data) => {
+          console.log(data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     });
   } catch (error) {
     console.log(error);

@@ -1,12 +1,26 @@
 const AdminBro = require("admin-bro");
 const User = require("./user.options");
 const Product = require("./product.options");
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 const AdminBroOptions = {
   resources: [Product, User],
   dashboard: {
     handler: async () => {
-      return { some: "USER DATA" };
+      try {
+        const charges = await stripe.charges.list({
+          limit: 30,
+        });
+
+        const data = charges.data.map(({ amount, created }) => ({
+          amount: amount / 100,
+          created: new Date(created * 1000).toDateString(),
+        }));
+
+        return { some: "DATA", charges: data.reverse() };
+      } catch (error) {
+        console.log(error);
+      }
     },
     component: AdminBro.bundle("../components/Dashboard"),
   },

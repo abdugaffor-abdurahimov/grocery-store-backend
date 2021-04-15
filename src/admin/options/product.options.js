@@ -7,15 +7,17 @@ const options = {
   properties: {
     images: {
       components: {
-        list: AdminBro.bundle("../components/product-images.list.tsx"),
-        edit: AdminBro.bundle("../components/upload-image.edit.tsx"),
-        show: AdminBro.bundle("../components/product-image.show.tsx"),
+        list: AdminBro.bundle("../components/product/product-images.list.tsx"),
+        edit: AdminBro.bundle("../components/product/upload-image.edit.tsx"),
+        show: AdminBro.bundle("../components/product/product-image.show.tsx"),
       },
     },
 
     description: {
       components: {
-        list: AdminBro.bundle("../components/product-description.list.tsx"),
+        list: AdminBro.bundle(
+          "../components/product/product-description.list.tsx"
+        ),
       },
     },
 

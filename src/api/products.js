@@ -106,7 +106,7 @@ router.get("/home/preview", async (req, res, next) => {
       ],
     };
 
-    res.send([categoryShop, foods, familyOutdor, instpired]);
+    res.send([categoryShop, foods, familyOutdor]);
   } catch (error) {
     next(error);
   }

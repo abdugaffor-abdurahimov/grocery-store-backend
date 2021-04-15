@@ -25,8 +25,6 @@ ProductSchema.methods.toJSON = function () {
   const product = this;
   const productObj = product.toObject();
 
-  productObj.comments.reverse();
-
   delete productObj.__v;
   delete productObj.userId;
 

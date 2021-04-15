@@ -1,6 +1,6 @@
 const ProductModel = require("../models/productModel");
 const q2m = require("query-to-mongo");
-const cloudinaryMulter = require("../middlewares/cloudinary.config");
+const { uploadCloud } = require("../middlewares/cloudinary.config");
 const { stripeSecretKey } = require("../config/env");
 const senEmailWithAttachment = require("../utils/emailAttachment");
 
@@ -114,12 +114,10 @@ router.get("/home/preview", async (req, res, next) => {
 
 router.post(
   "/upload-images/:productId",
-  cloudinaryMulter.array("images", 4),
+  uploadCloud.array("images", 4),
   async (req, res, next) => {
     try {
       const product = await ProductModel.findById("req.params.productId");
-      console.log(product);
-
       if (!product) res.status(404).send("Product not found");
       const images = req.files;
 

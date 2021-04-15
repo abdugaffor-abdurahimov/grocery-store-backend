@@ -6,12 +6,12 @@ const Edit: React.FC<BasePropertyProps> = (props) => {
   const { onChange, property } = props;
 
   const handleDropZoneChange: DropZoneProps["onChange"] = (files) => {
-    onChange(property.name, files[0].name);
+    onChange(property.name, files[0]);
   };
 
   return (
     <>
-      <Box>
+      <Box marginBottom="xxl">
         <Label>{property.label}</Label>
         <DropZone onChange={handleDropZoneChange} />
       </Box>

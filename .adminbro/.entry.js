@@ -1,7 +1,11 @@
 AdminBro.UserComponents = {}
-import Component1 from '../src/admin/components/product-images.edit'
+import Component1 from '../src/admin/components/product-images.list'
 AdminBro.UserComponents.Component1 = Component1
-import Component2 from '../src/admin/components/product-images.list'
+import Component2 from '../src/admin/components/upload-image.edit'
 AdminBro.UserComponents.Component2 = Component2
-import Component3 from '../src/admin/components/Dashboard'
+import Component3 from '../src/admin/components/product-image.show'
 AdminBro.UserComponents.Component3 = Component3
+import Component4 from '../src/admin/components/product-description.list'
+AdminBro.UserComponents.Component4 = Component4
+import Component5 from '../src/admin/components/Dashboard'
+AdminBro.UserComponents.Component5 = Component5

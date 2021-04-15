@@ -4,9 +4,9 @@ import { Box } from "@admin-bro/design-system";
 
 const List: React.FC<BasePropertyProps> = (props) => {
   const { record } = props;
-  const srcImg = record.params["images.0"];
+  const description: string = record.params.description;
 
-  return <Box>{true ? <img src={srcImg} width="100px" /> : "no image"}</Box>;
+  return <Box width="300px">{description.slice(0, 100)}</Box>;
 };
 
 export default List;

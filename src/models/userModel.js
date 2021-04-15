@@ -53,11 +53,6 @@ userSchema.static("findAllCard", async function (id) {
   });
 });
 
-userSchema.static("calculateCartTotal", async function (id) {
-  const { cart } = await this.findById(id);
-  // return
-});
-
 userSchema.static(
   "updateCartAmount",
   async function (userId, productId, amount) {

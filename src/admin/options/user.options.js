@@ -7,6 +7,10 @@ const options = {
     password: {
       type: "password",
     },
+
+    googleId: {
+      isVisible: false,
+    },
   },
 };
 

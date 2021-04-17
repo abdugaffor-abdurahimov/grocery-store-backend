@@ -2,6 +2,10 @@ const AdminBro = require("admin-bro");
 const ProductModel = require("../../models/productModel");
 const { cloudinary } = require("../../middlewares/cloudinary.config");
 
+const canEditProduct = ({ currentAdmin, record }) => {
+  return currentAdmin && currentAdmin.role === "admin";
+};
+
 /**@type {AdminBro.ResourceOptions} */
 const options = {
   properties: {
@@ -56,6 +60,10 @@ const options = {
         }
       },
     },
+
+    edit: { isAccessible: canEditProduct },
+    delete: { isAccessible: canEditProduct },
+    new: { isAccessible: canEditProduct },
   },
 };
 

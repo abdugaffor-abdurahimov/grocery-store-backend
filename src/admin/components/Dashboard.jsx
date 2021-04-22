@@ -1,7 +1,7 @@
 import { ApiClient } from "admin-bro";
 import React, { useState, useEffect } from "react";
 
-import { Box } from "@admin-bro/design-system";
+import { Box, Loader } from "@admin-bro/design-system";
 import LineChart from "./chart/Linechart";
 import BarChart from "./chart/BarChart";
 
@@ -21,8 +21,14 @@ const Dashboard = () => {
       <Box variant="white">
         <h1>Grocery store {data.some}</h1>
         <br />
-        <LineChart charges={data.charges} />
-        <BarChart selledProducts={data.selledProducts} />
+        {data.charges ? (
+          <>
+            <LineChart charges={data.charges} />
+            <BarChart selledProducts={data.selledProducts} />
+          </>
+        ) : (
+          <Loader />
+        )}
       </Box>
     </Box>
   );

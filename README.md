@@ -1,6 +1,9 @@
 # grocery-store-backend
 
 Admin: [Admin](https://grocery-stroe-api.herokuapp.com/admin)
+Admin email: demo@mail.com
+Admin Password: demo1234
+
 API documentation: [Docs](https://grocery-stroe-api.herokuapp.com/api/docs)
 
 .env config
@@ -24,3 +27,4 @@ API documentation: [Docs](https://grocery-stroe-api.herokuapp.com/api/docs)
 #### Features
 
 - Token based authentication
+- Role based authentication for admin

@@ -2,20 +2,26 @@ const AdminBro = require("admin-bro");
 const ProductModel = require("../../models/productModel");
 const { cloudinary } = require("../../middlewares/cloudinary.config");
 
+const canEditProduct = ({ currentAdmin, record }) => {
+  return currentAdmin && currentAdmin.role === "admin";
+};
+
 /**@type {AdminBro.ResourceOptions} */
 const options = {
   properties: {
     images: {
       components: {
-        list: AdminBro.bundle("../components/product-images.list.tsx"),
-        edit: AdminBro.bundle("../components/upload-image.edit.tsx"),
-        show: AdminBro.bundle("../components/product-image.show.tsx"),
+        list: AdminBro.bundle("../components/product/product-images.list.tsx"),
+        edit: AdminBro.bundle("../components/product/upload-image.edit.tsx"),
+        show: AdminBro.bundle("../components/product/product-image.show.tsx"),
       },
     },
 
     description: {
       components: {
-        list: AdminBro.bundle("../components/product-description.list.tsx"),
+        list: AdminBro.bundle(
+          "../components/product/product-description.list.tsx"
+        ),
       },
     },
 
@@ -54,6 +60,10 @@ const options = {
         }
       },
     },
+
+    edit: { isAccessible: canEditProduct },
+    delete: { isAccessible: canEditProduct },
+    new: { isAccessible: canEditProduct },
   },
 };
 

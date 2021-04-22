@@ -98,15 +98,7 @@ router.get("/home/preview", async (req, res, next) => {
       ],
     };
 
-    const instpired = {
-      title: "Inspired by your shopping",
-      data: [
-        { img: "", name: "" },
-        { img: "", name: "" },
-      ],
-    };
-
-    res.send([categoryShop, foods, familyOutdor, instpired]);
+    res.send([categoryShop, foods, familyOutdor]);
   } catch (error) {
     next(error);
   }

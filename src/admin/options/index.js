@@ -2,6 +2,7 @@ const AdminBro = require("admin-bro");
 const User = require("./user.options");
 const Product = require("./product.options");
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+const StatsModel = require("../../models/statsModel");
 
 const AdminBroOptions = {
   resources: [Product, User],
@@ -17,7 +18,9 @@ const AdminBroOptions = {
           created: new Date(created * 1000).toDateString(),
         }));
 
-        return { some: "DATA", charges: data.reverse() };
+        const selledProducts = await StatsModel.find({}).lean();
+
+        return { some: "DATA", charges: data.reverse(), selledProducts };
       } catch (error) {
         console.log(error);
       }

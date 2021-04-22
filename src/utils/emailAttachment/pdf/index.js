@@ -19,12 +19,6 @@ const htmlToPdfBuffer = async (userAddress) => {
       })
       .lean();
 
-    // const items = cart.map((item) => ({
-    //   amount: item.amount,
-    //   ...item.product,
-    //   images: item.product.images[0],
-    // }));
-
     const items = [];
     cart.forEach(async (item) => {
       items.push({
@@ -33,7 +27,16 @@ const htmlToPdfBuffer = async (userAddress) => {
         images: item.product.images[0],
       });
 
-      const product = await StatsModel.findById(item._id);
+      // Saving data for feature improvements
+      let product = await StatsModel.findById(item._id);
+      if (!product) {
+        product = await StatsModel.create({
+          productId: item._id,
+          amount: item.amount,
+        });
+      }
+
+      product.update({ amount: product.amount + item.amount });
     });
 
     const html = await ejs.renderFile(pathname, {

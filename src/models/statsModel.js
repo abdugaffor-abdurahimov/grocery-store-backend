@@ -8,6 +8,16 @@ const StatsSchema = new Schema(
   { timestamps: true }
 );
 
+StatsSchema.methods.toJSON = function () {
+  const stats = this;
+  const statsObj = stats.toObject();
+
+  delete statsObj.__v;
+  delete statsObj.userId;
+
+  return statsObj;
+};
+
 const StatsModel = model("Stats", StatsSchema);
 
 module.exports = StatsModel;

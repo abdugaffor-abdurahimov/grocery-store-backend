@@ -2,7 +2,8 @@ import { ApiClient } from "admin-bro";
 import React, { useState, useEffect } from "react";
 
 import { Box } from "@admin-bro/design-system";
-import LineChart from "./chart/Barchar";
+import LineChart from "./chart/Linechart";
+import BarChart from "./chart/BarChart";
 
 const api = new ApiClient();
 
@@ -21,6 +22,7 @@ const Dashboard = () => {
         <h1>Grocery store {data.some}</h1>
         <br />
         <LineChart charges={data.charges} />
+        <BarChart selledProducts={data.selledProducts} />
       </Box>
     </Box>
   );

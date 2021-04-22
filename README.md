@@ -1,12 +1,21 @@
 # grocery-store-backend
 
-Admin: [Admin](https://grocery-stroe-api.herokuapp.com/admin)
-Admin email: demo@mail.com
-Admin Password: demo1234
+You can log in using these credentials
+
+email: demo@mail.com
+
+password: demo1234
+
+Demo Admin: [Admin](https://grocery-stroe-api.herokuapp.com/admin)
 
 API documentation: [Docs](https://grocery-stroe-api.herokuapp.com/api/docs)
 
-.env config
+#### Features
+
+- Token based authentication
+- Role based authentication for admin
+
+#### .env config
 
 - FE_URL='frontend url'
 - APP_URL=backend url
@@ -23,8 +32,3 @@ API documentation: [Docs](https://grocery-stroe-api.herokuapp.com/api/docs)
 - OAUTH_CLIENTID=> Google Oauth cridential
 - OAUTH_CLIENT_SECRET=> Google Oauth cridential
 - OAUTH_REFRESH_TOKEN=> Google Oauth cridential
-
-#### Features
-
-- Token based authentication
-- Role based authentication for admin

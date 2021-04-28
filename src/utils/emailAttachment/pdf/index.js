@@ -28,15 +28,18 @@ const htmlToPdfBuffer = async (userAddress) => {
       });
 
       // Saving data for feature improvements
-      let product = await StatsModel.findById(item._id);
+      let product = await StatsModel.findOne({ productId: item.product._id });
+
+      console.log({ product });
+
       if (!product) {
         product = await StatsModel.create({
-          productId: item._id,
+          productId: item.product._id,
           amount: item.amount,
         });
       }
 
-      product.update({ amount: product.amount + item.amount });
+      await product.updateOne({ amount: product.amount + item.amount });
     });
 
     const html = await ejs.renderFile(pathname, {

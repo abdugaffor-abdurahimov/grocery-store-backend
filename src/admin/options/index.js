@@ -18,7 +18,13 @@ const AdminBroOptions = {
           created: new Date(created * 1000).toDateString(),
         }));
 
-        const selledProducts = await StatsModel.find({}).lean();
+        const selledProducts = await StatsModel.find({})
+          .populate({
+            path: "productId",
+            select: { name: 1 },
+          })
+          .limit(10)
+          .lean();
 
         return { some: "DATA", charges: data.reverse(), selledProducts };
       } catch (error) {

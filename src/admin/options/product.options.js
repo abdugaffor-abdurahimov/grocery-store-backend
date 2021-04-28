@@ -48,6 +48,7 @@ const options = {
                 );
               }
             );
+
             const newProduct = await ProductModel.create({
               ...otherParams,
               images: [info.url],

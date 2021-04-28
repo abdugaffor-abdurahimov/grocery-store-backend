@@ -2,12 +2,13 @@ import React from "react";
 import { Bar } from "react-chartjs-2";
 
 export default function LineChart({ selledProducts }) {
+  console.log({ selledProducts });
   return (
     <div>
       <Bar
         data={{
           labels: selledProducts
-            ? selledProducts.map(({ _id }) => `Id: ${_id}`)
+            ? selledProducts.map(({ productId }) => productId.name)
             : [],
           datasets: [
             {
